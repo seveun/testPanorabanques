@@ -1,9 +1,9 @@
-import 'babel-polyfill';
+import '@babel/polyfill';
 import _Promise from 'bluebird';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-
+import fileUpload from 'express-fileupload';
 import * as _controllers from './controllers';
 import * as _services from './services';
 
@@ -19,6 +19,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(fileUpload());
 app.use(cors());
 
 DbIniter.init().then(() => {
@@ -30,4 +31,4 @@ DbIniter.init().then(() => {
 const { createRouter } = require('./routes');
 
 createRouter(app);
-app.use((err, req, res) => renderBackendError(res, err));
+app.use((err, req, res, next) => renderBackendError(res, err));

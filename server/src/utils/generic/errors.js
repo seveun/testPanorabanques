@@ -30,7 +30,7 @@ class DefaultError extends Error {
       name: this.name,
       message: this.message,
       data: filterStackTrace(data),
-      stack: filterStackTrace(this.stack),
+      // stack: filterStackTrace(this.stack),
     };
   }
 

@@ -1,8 +1,10 @@
 import express from 'express';
 import Promise from 'bluebird';
 import { renderOk } from '../utils';
+import ClientRoutes from './Client.routes';
 
 export const routes = [
+  ...ClientRoutes,
 ];
 
 export const createRouter = (app) => {

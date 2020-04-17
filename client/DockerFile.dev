@@ -5,7 +5,8 @@ RUN apk update \
         build-base \
         gcc \
         wget \
-        git
+        git \
+        --update nodejs npm
 
 WORKDIR '/app'
 

@@ -1,6 +1,5 @@
 FROM node:alpine
 
-
 RUN apk update \
     && apk add --virtual build-dependencies \
         build-base \
@@ -9,7 +8,8 @@ RUN apk update \
         git \
         curl \
         bash \
-        grep
+        grep \
+        --update nodejs npm
 
 WORKDIR '/app'
 
