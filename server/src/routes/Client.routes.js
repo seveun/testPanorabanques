@@ -8,6 +8,12 @@ export default [
     handler: controllers.Client.getClient,
   },
   {
+    method: 'PUT',
+    path: '/client/:id',
+    validators: [],
+    handler: controllers.Client.updateClient,
+  },
+  {
     method: 'POST',
     path: '/client',
     validators: [],

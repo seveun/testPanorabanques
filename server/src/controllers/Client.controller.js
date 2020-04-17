@@ -33,4 +33,9 @@ export default class ClientController {
     return totalImport;
   }
 
+  static async updateClient(req) {
+    const updateClient = await ClientService.updateClient(req.params, req.body);
+    return updateClient;
+  }
+
 }

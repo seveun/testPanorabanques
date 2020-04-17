@@ -33,11 +33,11 @@ export default class ClientValidator {
   }
 
   static postalCode(postalCode) {
-    return postalCode.match(/[0-9]{5}/)[0];
+    return postalCode.toString().match(/[0-9]{5}/)[0];
   }
 
   static streetNumber(streetNumber) {
-    return streetNumber.match(/[0-9]+/)[0];
+    return streetNumber.toString().match(/[0-9]+/)[0];
   }
 
   static streetAddress(streetAddress) {

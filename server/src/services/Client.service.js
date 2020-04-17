@@ -16,6 +16,26 @@ export default class ClientService {
     if (ClientModel === undefined) ClientModel = Models.getModel('Client');
   }
 
+  static async updateClient(get, params) {
+    ClientService.init();
+    if (!('id' in get)) throw new BadRequestError('id is missing');
+    const validParams = {};
+    ClientAttr.forEach(param => {
+      try {
+        if (param in params) validParams[param] = ClientValidator[param](params[param]);
+      } catch (error) {
+        throw new BadRequestError(`${param} is not valid`);
+      }
+    });
+    try {
+      const Client = await ClientModel.findOne({ where: { id: get.id } });
+      await Client.update(validParams);
+      return Client;
+    } catch (error) {
+      throw new BadRequestError('impossible to get client');
+    }
+  }
+
   static async getClient(params) {
     ClientService.init();
     const validParams = {};
@@ -27,7 +47,14 @@ export default class ClientService {
       }
     });
     try {
-      const Client = await ClientModel.findAll({ where: validParams });
+      const Client = await ClientModel.findAll({
+        where: validParams,
+        attributes: {
+          include: [
+            ['id', 'key'],
+          ],
+        },
+      });
       return Client;
     } catch (error) {
       throw new BadRequestError('impossible to get client');

@@ -1,6 +1,8 @@
 import React from 'react';
 import stylesheet from 'antd/dist/antd.min.css';
-import {jquery, boostrap} from '../utils/constant'
+import {jquery, boostrap} from '../utils/constant';
+import Homepage from '../containers/homepage';
+
 class HomePage extends React.Component {
 
   componentDidMount () {
@@ -21,9 +23,7 @@ class HomePage extends React.Component {
           <link rel="stylesheet" href="/css/style.css"/>
           <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
         </header>
-        <div>
-          first push
-        </div>
+        <Homepage/>
       </>
     );
   }
