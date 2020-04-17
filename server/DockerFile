@@ -1,0 +1,31 @@
+FROM node:alpine
+
+RUN mkdir -p /usr/src/app
+
+WORKDIR /usr/src/app
+
+RUN apk update \
+    && apk add --virtual build-dependencies \
+        build-base \
+        gcc \
+        wget \
+        git \
+        curl \
+        bash \
+        grep
+
+WORKDIR '/app'
+
+COPY package.json .
+
+RUN npm install
+
+RUN npm install --silent --production \
+    && apk del build-dependencies \
+    && rm -rf /var/cache/apk/*
+
+COPY . .
+
+RUN npm run build
+
+CMD ["sh", "-c", "npm run build && npm run prod"]

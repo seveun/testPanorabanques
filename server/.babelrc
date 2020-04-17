@@ -1,0 +1,10 @@
+{
+    "presets": [
+      "env",
+      "es2017"
+    ],
+    "compact": "auto",
+    "plugins": [
+      "babel-polyfill"
+    ]
+  }
