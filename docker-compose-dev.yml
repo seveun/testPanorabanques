@@ -1,0 +1,58 @@
+version: "3.1"
+
+services:
+  db-server:
+    image: mysql:5.6
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: db-server
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - /sessions
+  server:
+    build:
+      dockerfile: DockerFile.dev
+      context: ./server
+    environment:
+      DOMAIN: localhost
+      PORT: 3000
+      NODE_ENV: prod
+      JWT_SECRET: z4S8as4A15S8as48AS17a9AZDlkQSC
+      MYSQL_NAME_SERVER: db-server
+      MYSQL_USER_SERVER: root
+      MYSQL_PASSWORD_SERVER: password
+      MYSQL_HOST_SERVER: db-server
+      MYSQL_PORT: 3306
+      BASEURL: http://localhost:4000
+      MAIL_USER: matehis.langlais27200@gmail.com
+      MAIL_PASS: zzxkyacrxxywmqta
+    ports:
+      - 3000:3000
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+  client:
+    build:
+      dockerfile: DockerFile.dev
+      context: ./client
+    ports:
+      - 4000:4000
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+      - /app/.next
