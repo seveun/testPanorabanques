@@ -13,7 +13,7 @@ export default class ClientController {
   }
 
   static async deleteClient(req) {
-    const nbrClientDelete = await ClientService.deleteClient(req.query);
+    const nbrClientDelete = await ClientService.deleteClient(req.params);
     return nbrClientDelete;
   }
 

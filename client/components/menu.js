@@ -51,6 +51,10 @@ export default function (SubMenuPage, selected) {
                   <Icon type="bar-chart"/>
                   <span className="nav-text">Liste Client</span>
                 </Menu.Item>
+                <Menu.Item key="Statistic" onClick={() => Router.push(`/stat`)}> 
+                  <Icon type="bar-chart"/>
+                  <span className="nav-text">Statistiques Client</span>
+                </Menu.Item>
               </Menu>
             </Sider>
             <Layout style={style.layout}>

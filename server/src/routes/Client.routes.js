@@ -21,7 +21,7 @@ export default [
   },
   {
     method: 'DELETE',
-    path: '/client',
+    path: '/client/:id',
     validators: [],
     handler: controllers.Client.deleteClient,
   },

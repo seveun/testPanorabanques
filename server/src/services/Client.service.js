@@ -63,16 +63,9 @@ export default class ClientService {
 
   static async deleteClient(params) {
     ClientService.init();
-    const validParams = {};
-    ClientAttr.forEach(param => {
-      try {
-        if (param in params) validParams[param] = ClientValidator[param](params[param]);
-      } catch (error) {
-        throw new BadRequestError(`${param} is not valid`);
-      }
-    });
+    if (!('id' in params)) throw new BadRequestError('id is missing');
     try {
-      const nbrClientDelete = await ClientModel.destroy({ where: validParams });
+      const nbrClientDelete = await ClientModel.destroy({ where: { id: params.id } });
       return nbrClientDelete;
     } catch (error) {
       throw new BadRequestError('impossible to delete client');
@@ -109,7 +102,7 @@ export default class ClientService {
     let Clients;
     try {
       Clients = await new Promise((resolve, reject) => {
-        CSV().fromString(files[''].data.toString())
+        CSV().fromString(files.file.data.toString())
           .then((clients) => resolve(clients))
           .catch(err => reject(err));
       });
@@ -151,6 +144,7 @@ export default class ClientService {
       const Client = await ClientModel.findAll({
         group: validParams,
         attributes: [
+          ['id', 'key'],
           ...validParams,
           ...validParams.map(attr =>
             [sequelize.fn('COUNT', `Client.${attr}`), `${attr}Total`]),
